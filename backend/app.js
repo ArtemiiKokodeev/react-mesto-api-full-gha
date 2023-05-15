@@ -2,6 +2,7 @@ const express = require('express');
 const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
 const helmet = require('helmet');
+const rateLimit = require('express-rate-limit');
 const cors = require('cors');
 const { errors } = require('celebrate');
 const { createUserJoiValidation, loginJoiValidation } = require('./middlewares/userJoiValidation');
@@ -20,6 +21,7 @@ const options = {
   origin: [
     'http://localhost:3000',
     'https://instagram-killer.nomoredomains.monster',
+    'http://instagram-killer.nomoredomains.monster',
     'https://artemiikokodeev.github.io',
   ],
   methods: ['GET', 'HEAD', 'PUT', 'PATCH', 'POST', 'DELETE'],
@@ -28,12 +30,20 @@ const options = {
   allowedHeaders: ['Content-Type', 'origin', 'Authorization'],
 };
 
+const limiter = rateLimit({
+  windowMs: 15 * 60 * 1000, // 15 minutes
+  max: 100, // Limit each IP to 100 requests per `window` (here, per 15 minutes)
+  standardHeaders: true, // Return rate limit info in the `RateLimit-*` headers
+  legacyHeaders: false, // Disable the `X-RateLimit-*` headers
+});
+
 mongoose.connect(DB_ADDRESS);
 
 const app = express();
 
 app.use('*', cors(options));
 app.use(helmet());
+app.use(limiter);
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));

@@ -9,7 +9,7 @@
 
 export const apiConfig = {
   // url: 'http://localhost:3001/',
-  url: 'https://api.instagram-killer.nomoredomains.monster/',
+  url: process.env.NODE_ENV === 'production' ? 'https://api.instagram-killer.nomoredomains.monster/' : 'http://localhost:3001/',
   // headers: {
   //   'Content-type': 'application/json',
   //   authorization: `Bearer ${token}`
@@ -20,4 +20,7 @@ export const apiConfig = {
 
 // export const BASE_URL = 'http://localhost:3001/';
 
-export const BASE_URL = 'https://api.instagram-killer.nomoredomains.monster/';
+// export const BASE_URL = 'https://api.instagram-killer.nomoredomains.monster/';
+
+// Попробую так
+export const BASE_URL = process.env.NODE_ENV === 'production' ? 'https://api.instagram-killer.nomoredomains.monster/' : 'http://localhost:3001/';

@@ -3,6 +3,9 @@ logs
 *.log
 npm-debug.log*
 
+# Environment variables
+.env
+
 # Dependency directory
 node_modules
 
@@ -12,4 +15,4 @@ node_modules
 # Optional REPL history
 .DS_Store
 .idea
-.vscode 
+.vscode
