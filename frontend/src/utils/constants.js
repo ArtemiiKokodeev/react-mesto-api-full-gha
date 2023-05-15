@@ -5,16 +5,19 @@
 //     authorization: '59fe9cd6-0f57-4ebd-bbbd-39bb16004429'
 //   }
 // }
-const token = localStorage.getItem('jwt');
+// const token = localStorage.getItem('jwt');
 
 export const apiConfig = {
-  url: 'http://localhost:3001/',
-  headers: {
-    'Content-type': 'application/json',
-    authorization: `Bearer ${token}`
-  }
+  // url: 'http://localhost:3001/',
+  url: 'https://api.instagram-killer.nomoredomains.monster/',
+  // headers: {
+  //   'Content-type': 'application/json',
+  //   authorization: `Bearer ${token}`
+  // }
 }
 
 // export const BASE_URL = 'https://auth.nomoreparties.co/';
 
-export const BASE_URL = 'http://localhost:3001/';
+// export const BASE_URL = 'http://localhost:3001/';
+
+export const BASE_URL = 'https://api.instagram-killer.nomoredomains.monster/';

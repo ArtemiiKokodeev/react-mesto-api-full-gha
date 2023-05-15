@@ -36,8 +36,8 @@ function App() {
   useEffect(() => {
     loggedIn && Promise.all([apiNew.getProfileInfo(), apiNew.getInitialCards()])
     .then(([initUserInfo, initCards]) => {
-      console.log(initCards)
-      console.log(initUserInfo)
+      // console.log(initCards)
+      // console.log(initUserInfo)
       setCurrentUser(initUserInfo)
       setCards(initCards);
     })
@@ -74,7 +74,7 @@ function App() {
   function handleLogin(email, password) {
     Auth.authorize(email, password)
       .then((data) => {
-        console.log(data.token);
+        // console.log(data.token);
         if (data.token){
           localStorage.setItem("jwt", data.token);
           handleTokenCheck();
@@ -93,7 +93,7 @@ function App() {
       Auth.checkToken(jwt)
       .then((res) => {
         if (res) {
-          console.log(res)
+          // console.log(res)
           handleEmail(res.email);
           setLoggedIn(true);
           navigate("/", {replace: true})
@@ -146,7 +146,7 @@ function App() {
   function handleUpdateUser(userInfo) {
     apiNew.editProfileInfo(userInfo)
     .then((res) => {
-      console.log(res.data);
+      // console.log(res.data);
       setCurrentUser(res.data);
       closeAllPopups();
     })
@@ -170,7 +170,7 @@ function App() {
   function handleAddPlaceSubmit(cardInfo) {
     apiNew.addNewCard(cardInfo)
     .then((newCard) => {
-      console.log(newCard.data);
+      // console.log(newCard.data);
       setCards([newCard.data, ...cards]);
       closeAllPopups();
     })

@@ -19,7 +19,7 @@ mongoose.set('strictQuery', false);
 const options = {
   origin: [
     'http://localhost:3000',
-    // 'https://ВАШ ДОМЕЙН С ДОКУМЕНТА',
+    'https://instagram-killer.nomoredomains.monster',
     'https://artemiikokodeev.github.io',
   ],
   methods: ['GET', 'HEAD', 'PUT', 'PATCH', 'POST', 'DELETE'],
@@ -32,13 +32,20 @@ mongoose.connect(DB_ADDRESS);
 
 const app = express();
 
-app.use(helmet());
 app.use('*', cors(options));
+app.use(helmet());
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
 app.use(requestLogger);
+
+app.get('/crash-test', () => {
+  setTimeout(() => {
+    throw new Error('Сервер сейчас упадёт');
+  }, 0);
+});
+
 app.post('/signin', loginJoiValidation, login);
 app.post('/signup', createUserJoiValidation, createUser);
 app.use('/users', auth, usersRouter);

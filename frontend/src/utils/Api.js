@@ -1,9 +1,8 @@
 import { apiConfig } from './constants';
 
 export class Api {
-    constructor({url, headers}) {
+    constructor({url}) {
       this._url = url;
-      this._headers = headers;
     }
 
     // Проверка ответа от сервера
@@ -17,25 +16,37 @@ export class Api {
 
     // Получить список всех карточек в виде массива (GET)
     getInitialCards() {
+      const token = localStorage.getItem('jwt');
       return fetch(`${this._url}cards`, {
-        headers: this._headers
+        headers: {
+          'Content-type': 'application/json',
+          authorization: `Bearer ${token}`
+        }
       })
       .then(this._checkServerResponse)
     }
 
     // Получить данные пользователя (GET)
     getProfileInfo() {
+      const token = localStorage.getItem('jwt');
       return fetch(`${this._url}users/me`, {
-        headers: this._headers
+        headers: {
+          'Content-type': 'application/json',
+          authorization: `Bearer ${token}`
+        }
       })
       .then(this._checkServerResponse)
     }
 
     // Заменить данные пользователя (PATCH)
     editProfileInfo(userInfo) {
+      const token = localStorage.getItem('jwt');
       return fetch(`${this._url}users/me`, {
         method: 'PATCH',
-        headers: this._headers,
+        headers: {
+          'Content-type': 'application/json',
+          authorization: `Bearer ${token}`
+        },
         body: JSON.stringify(userInfo)
       })
       .then(this._checkServerResponse)
@@ -43,9 +54,13 @@ export class Api {
 
     // Добавить карточку (POST)
     addNewCard(cardInfo) {
+      const token = localStorage.getItem('jwt');
       return fetch(`${this._url}cards`, {
         method: 'POST',
-        headers: this._headers,
+        headers: {
+          'Content-type': 'application/json',
+          authorization: `Bearer ${token}`
+        },
         body: JSON.stringify(cardInfo)
       })
       .then(this._checkServerResponse)
@@ -53,25 +68,36 @@ export class Api {
 
     // Удалить карточку (DELETE)
     deleteCard(id) {
+      const token = localStorage.getItem('jwt');
       return fetch(`${this._url}cards/${id}`, {
         method: 'DELETE',
-        headers: this._headers,
+        headers: {
+          'Content-type': 'application/json',
+          authorization: `Bearer ${token}`
+        },
       })
       .then(this._checkServerResponse)
     }
 
     // Поставить или убрать лайк карточки (PUT/DELETE)
     changeLikeCardStatus(id, isLiked) {
+      const token = localStorage.getItem('jwt');
       if (isLiked) {
         return fetch(`${this._url}cards/${id}/likes`, {
           method: 'PUT',
-          headers: this._headers
+          headers: {
+            'Content-type': 'application/json',
+            authorization: `Bearer ${token}`
+          },
         })
         .then(this._checkServerResponse)
       } else {
           return fetch(`${this._url}cards/${id}/likes`, {
             method: 'DELETE',
-            headers: this._headers
+            headers: {
+              'Content-type': 'application/json',
+              authorization: `Bearer ${token}`
+            },
         })
         .then(this._checkServerResponse)
       }
@@ -79,9 +105,13 @@ export class Api {
 
     // Заменить аватар (PATCH)
     editAvatar(avatarLink) {
+      const token = localStorage.getItem('jwt');
       return fetch(`${this._url}users/me/avatar`, {
         method: 'PATCH',
-        headers: this._headers,
+        headers: {
+          'Content-type': 'application/json',
+          authorization: `Bearer ${token}`
+        },
         body: JSON.stringify(avatarLink)
       })
       .then(this._checkServerResponse)
